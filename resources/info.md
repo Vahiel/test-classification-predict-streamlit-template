@@ -5,8 +5,9 @@ This process requires the user to input text
 classify it according to whether or not they believe in
 climate change.Below you will find information about the data source
 and a brief data description. You can have a look at word clouds and
-other general EDA on the EDA page, and make your predictions on the
-prediction page that you can navigate to in the sidebar.
+other general EDA on the data insights page, and make your predictions on the
+prediction page that you can navigate to in the sidebar. Additonal pages relating to climate are available which provide
+some general information about climate change are also available.
 
 ###  Data description as per source
 
