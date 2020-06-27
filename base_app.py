@@ -112,11 +112,11 @@ def main():
             
 			tweet_text = clean_ing(tweet_text)                
 			# Transforming user input with vectorizer
-			vect_text = tweet_cv.transform([tweet_text]).toarray()
+			#vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
 			predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-			prediction = predictor.predict(vect_text)
+			prediction = predictor.predict([tweet_text])
 
 			# When model has successfully run, will print prediction
 			# You can use a dictionary or similar structure to make this output
