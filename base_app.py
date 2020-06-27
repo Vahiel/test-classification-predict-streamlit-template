@@ -31,8 +31,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from pathlib import Path
 import numpy as np
-#import spacy
-#nlp = spacy.load('en_core_web_sm')
+import spacy
+nlp = spacy.load('en_core_web_sm')
 import pickle
 import re 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -42,36 +42,13 @@ from wordcloud import WordCloud
 from nltk.corpus import stopwords
 
 # Vectorizer
-#news_vectorizer = open("resources/tfidfvect.pkl","rb")
-#tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
+news_vectorizer = open("resources/tfidfvect.pkl","rb")
+tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
 #raw = pd.read_csv("resources/train.csv")
 train_data = pd.read_csv('https://raw.githubusercontent.com/rufusseopa/classification-predict-streamlit-template/master/Data/train.csv')
 test_data = pd.read_csv('https://raw.githubusercontent.com/rufusseopa/classification-predict-streamlit-template/master/Data/test.csv')
-
-def clean_text(raw): 
-    # Remove link
-    raw = re.sub(r'http\S+', '', raw)
-    # Remove "RT"
-    raw = re.sub('RT ', '', raw)
-    # Remove unexpected artifacts
-    raw = re.sub(r'â€¦', '', raw)
-    raw = re.sub(r'…', '', raw)
-    raw = re.sub(r'â€™', "'", raw)
-    raw = re.sub(r'â€˜', "'", raw)
-    raw = re.sub(r'\$q\$', "'", raw)
-    raw = re.sub(r'&amp;', "and", raw)
-    words = raw.split()  
-
-    return( " ".join(words))
-
-train_data['message'] = train_data['message'].apply(clean_text)
-test_data['message'] = test_data['message'].apply(clean_text)
-
-
-
-
 
 
 # The main function where we will build the actual app
@@ -87,7 +64,7 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	#st.title("Tweet Classifer (**_Climate Change Sentiment_**)")
+	st.title("Tweet Classifer (**_Climate Change Sentiment_**)")
 	st.subheader("Climate change tweet classification")
 
 	# Creating sidebar with selection box -
@@ -131,7 +108,6 @@ def main():
 			pro = train_data[train_data['sentiment']==1]
 			neutral = train_data[train_data['sentiment']==0]
 			anti = train_data[train_data['sentiment']==-1]
-			st.subheader('Length of tweets')
 			fig, axs = plt.subplots(2, 2, figsize=(11,7))
 
 			axs[0, 0].hist(pro.message.str.len(),bins=50,label='pro',color='grey')
@@ -200,7 +176,7 @@ def main():
 		# You can read a markdown file from supporting resources folder
 		#st.markdown("The following page contains a youtube video about climate change")
 
-		st.subheader("This page contains a youtube video explaing what climate change is and the effects of it")
+		st.subheader("The following page contains a youtube video explaing what climate change is and the effect of it")
 		if st.checkbox('View video'): # data is hidden if box is unchecked
 			st.video('https://www.youtube.com/watch?v=ifrHogDujXw&t=12s')
             
@@ -209,7 +185,7 @@ def main():
 		st.info("Brief overview of climate change")
 		# You can read a markdown file from supporting resources folder
 		st.subheader("The following page contains information about what climate change is and the effects of it")
-		st.markdown(open('resources/climate change info.md').read())
+		st.markdown(open('resources/Untitled.md').read())
 		image = Image.open('resources/polar bear.png')
 		st.image(image, caption='Effects on wildlife')
 
@@ -221,10 +197,6 @@ def main():
 		st.info("Prediction with ML Models")
 		# Creating a text box for user input
 		tweet_text = st.text_area("Enter Text below to classify it","Type Here")
-        
-        #Create sidebar for user to choose model
-		model_opt = ["Logistic Regression","Linear SVC","Kernel SVM"]
-		select_model = st.sidebar.selectbox("Choose Model", model_opt)        
 
 		if st.button("Classify"):
             #Convert every tweet to be lower case, we do this to reduce some noise.
@@ -274,21 +246,8 @@ def main():
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
             
-			#if select_model == "Logistic Regression":                
-				#predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
-				#prediction = predictor.predict([tweet_text])
-
-			if select_model == "Linear SVC":                
-				predictor = joblib.load(open(os.path.join("resources/linsvctest.pkl"),"rb"))
-				prediction = predictor.predict([tweet_text])
-   
-			#if select_model == "Kernel SVM":                
-				#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-				#prediction = predictor.predict([tweet_text])            
-            
-            
-			#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-			#prediction = predictor.predict([tweet_text])
+			predictor = joblib.load(open(os.path.join("resources/linsvc1.pkl"),"rb"))
+			prediction = predictor.predict([tweet_text])
             
 			st.success("Text Categorized as: {}".format(prediction))                        
 
