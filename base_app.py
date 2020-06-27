@@ -64,7 +64,7 @@ def clean_text(raw):
     return( " ".join(words))
 
 train_data['message'] = train_data['message'].apply(clean_text)
-test_data['message'] = test_data['message'].apply(clean_text)
+
 
 
 
@@ -220,8 +220,8 @@ def main():
 		tweet_text = st.text_area("Enter Text below to classify it","Type Here")
         
         #Create sidebar for user to choose model
-		model_opt = ["Logistic Regression","Linear SVC","Kernel SVM"]
-		select_model = st.sidebar.selectbox("Choose Model", model_opt)        
+		#model_opt = ["Logistic Regression","Linear SVC","Kernel SVM"]
+		#select_model = st.sidebar.selectbox("Choose Model", model_opt)        
 
 		if st.button("Classify"):
             #Convert every tweet to be lower case, we do this to reduce some noise.
@@ -271,21 +271,21 @@ def main():
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
             
-			if select_model == "Logistic Regression":                
-				predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
-				prediction = predictor.predict([tweet_text])
+			#if select_model == "Logistic Regression":                
+				#predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
+				#prediction = predictor.predict([tweet_text])
 
-			if select_model == "Linear SVC":                
-				predictor = joblib.load(open(os.path.join("resources/linsvctest.pkl"),"rb"))
-				prediction = predictor.predict([tweet_text])
+			#if select_model == "Linear SVC":                
+				#predictor = joblib.load(open(os.path.join("resources/linsvctest.pkl"),"rb"))
+				#prediction = predictor.predict([tweet_text])
    
-			if select_model == "Kernel SVM":                
-				predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-				prediction = predictor.predict([tweet_text])            
+			#if select_model == "Kernel SVM":                
+				#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
+				#prediction = predictor.predict([tweet_text])            
             
             
-			#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-			#prediction = predictor.predict([tweet_text])
+			predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
+			prediction = predictor.predict([tweet_text])
             
 			st.success("Text Categorized as: {}".format(prediction))                        
 
