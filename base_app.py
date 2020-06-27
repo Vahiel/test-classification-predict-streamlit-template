@@ -67,11 +67,45 @@ def main():
 		tweet_text = st.text_area("Enter Text","Type Here")
 
 		if st.button("Classify"):
+			tweet_text = tweet_text.lower()
+            #Remove stop words
+			def stop_words(text):
+				word = text.split()
+                #Remove stop words
+				stop_word = set(stopwords.words("english"))
+				remove_stop = [w for w in word if w not in stop_word]
+				free_stop = " ".join(remove_stop)
+				return free_stop
+			tweet_text = stop_words(tweet_text)
+            
+			spec_chars = ["!",'"',"#","%","&","'","(",")",
+              "*","+",",","-",".","/",":",";","<",
+              "=",">","?","@","[","\\","]","^","_",
+              "`","{","|","}","~","–","0123456789"]
+			for char in spec_chars:
+				tweet_text = tweet_text.replace(char, ' ')
+			def clean_ing(raw): 
+			# Remove link
+				raw = re.sub(r'http\S+', '', raw)
+                # Remove "RT"
+				raw = re.sub('RT ', '', raw)
+                # Remove unexpected artifacts
+				raw = re.sub(r'â€¦', '', raw)
+				raw = re.sub(r'…', '', raw)
+				raw = re.sub(r'â€™', "'", raw)
+				raw = re.sub(r'â€˜', "'", raw)
+				raw = re.sub(r'\$q\$', "'", raw)
+				raw = re.sub(r'&amp;', "and", raw)
+				words = raw.split()  
+
+				return( " ".join(words))
+            
+			tweet_text = clean_ing(tweet_text)                
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
-			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
+			predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 
 			# When model has successfully run, will print prediction
