@@ -27,6 +27,16 @@ import joblib,os
 
 # Data dependencies
 import pandas as pd
+import numpy as np
+import spacy
+nlp = spacy.load('en_core_web_sm')
+import pickle
+import re 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.svm import LinearSVC
+from sklearn.pipeline import Pipeline
+from wordcloud import WordCloud
+from nltk.corpus import stopwords
 
 # Vectorizer
 news_vectorizer = open("resources/tfidfvect.pkl","rb")
