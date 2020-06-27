@@ -31,8 +31,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from pathlib import Path
 import numpy as np
-import spacy
-nlp = spacy.load('en_core_web_sm')
+#import spacy
+#nlp = spacy.load('en_core_web_sm')
 import pickle
 import re 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -42,8 +42,8 @@ from wordcloud import WordCloud
 from nltk.corpus import stopwords
 
 # Vectorizer
-news_vectorizer = open("resources/tfidfvect.pkl","rb")
-tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
+#news_vectorizer = open("resources/tfidfvect.pkl","rb")
+#tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
 #raw = pd.read_csv("resources/train.csv")
