@@ -265,24 +265,6 @@ def main():
             
 			tweet_text = clean_ing(tweet_text)
          
-           
-			# Transforming user input with vectorizer
-			#vect_text = tweet_cv.transform([tweet_text]).toarray()
-			# Load your .pkl file with the model of your choice + make predictions
-			# Try loading in multiple models to give the user a choice
-            
-			#if select_model == "Logistic Regression":                
-				#predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
-				#prediction = predictor.predict([tweet_text])
-
-			#if select_model == "Linear SVC":                
-				#predictor = joblib.load(open(os.path.join("resources/linsvctest.pkl"),"rb"))
-				#prediction = predictor.predict([tweet_text])
-   
-			#if select_model == "Kernel SVM":                
-				#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-				#prediction = predictor.predict([tweet_text])            
-            
             
 			predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
 			prediction = predictor.predict([tweet_text])
@@ -292,15 +274,6 @@ def main():
 			# When model has successfully run, will print prediction
 			# You can use a dictionary or similar structure to make this output
 			# more human interpretable.
-			x =(prediction)
-			if x==1:
-				st.success('Tweet supports man-made climate change')
-			elif x==2:
-				st.success('Tweet links to news about climate change')
-			elif x==-1:
-				st.success('Tweet does not support man-made climate change')
-			else:
-				st.success('Tweet neither supports nor refutes the belief of man-made climate change')                
 
 
             
