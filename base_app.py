@@ -274,17 +274,17 @@ def main():
 			# Load your .pkl file with the model of your choice + make predictions
 			# Try loading in multiple models to give the user a choice
             
-			if select_model == "Logistic Regression":                
-				predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
-				prediction = predictor.predict([tweet_text])
+			#if select_model == "Logistic Regression":                
+				#predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
+				#prediction = predictor.predict([tweet_text])
 
 			if select_model == "Linear SVC":                
-				predictor = joblib.load(open(os.path.join("resources/linsvc1.pkl"),"rb"))
+				predictor = joblib.load(open(os.path.join("resources/linsvctest.pkl"),"rb"))
 				prediction = predictor.predict([tweet_text])
    
-			if select_model == "Kernel SVM":                
-				predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-				prediction = predictor.predict([tweet_text])            
+			#if select_model == "Kernel SVM":                
+				#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
+				#prediction = predictor.predict([tweet_text])            
             
             
 			#predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
