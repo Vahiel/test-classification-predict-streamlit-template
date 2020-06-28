@@ -31,9 +31,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from pathlib import Path
 import numpy as np
-import spacy
-nlp = spacy.load('en_core_web_sm')
-import pickle
 import re 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
@@ -43,7 +40,7 @@ from nltk.corpus import stopwords
 
 
 # Load your raw data
-#raw = pd.read_csv("resources/train.csv")
+raw = pd.read_csv("resources/train.csv")
 train_data = pd.read_csv('https://raw.githubusercontent.com/rufusseopa/classification-predict-streamlit-template/master/Data/train.csv')
 
 
@@ -64,11 +61,6 @@ def clean_text(raw):
     return( " ".join(words))
 
 train_data['message'] = train_data['message'].apply(clean_text)
-
-
-
-
-
 
 
 # The main function where we will build the actual app
