@@ -212,8 +212,8 @@ def main():
 		tweet_text = st.text_area("Enter Text below to classify it","Type Here")
         
         #Create sidebar for user to choose model
-		#model_opt = ["Logistic Regression","Linear SVC","Kernel SVM"]
-		#select_model = st.sidebar.selectbox("Choose Model", model_opt)        
+		model_opt = ["Logistic Regression","Linear SVC","Kernel SVM"]
+		select_model = st.sidebar.selectbox("Choose Model", model_opt)        
 
 		if st.button("Classify"):
 
