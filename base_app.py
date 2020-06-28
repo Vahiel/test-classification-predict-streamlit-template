@@ -220,15 +220,33 @@ def main():
             
 			tweet_text = clean_text(tweet_text)
          
-			predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
-			prediction = predictor.predict([tweet_text])
+			if select_model == "Logistic Regression":                
+				predictor = joblib.load(open(os.path.join("resources/logreg.pkl"),"rb"))
+				prediction = predictor.predict([tweet_text])
+
+			if select_model == "Linear SVC":                
+				predictor = joblib.load(open(os.path.join("resources/linsvc1.pkl"),"rb"))
+				prediction = predictor.predict([tweet_text])
+   
+			if select_model == "Kernel SVM":                
+				predictor = joblib.load(open(os.path.join("resources/kernelsvm.pkl"),"rb"))
+				prediction = predictor.predict([tweet_text])            
+            
             
 			st.success("Text Categorized as: {}".format(prediction))                        
 
 			# When model has successfully run, will print prediction
 			# You can use a dictionary or similar structure to make this output
 			# more human interpretable.
-
+			x =(prediction)
+			if x==1:
+				st.success('Tweet supports man-made climate change')
+			elif x==2:
+				st.success('Tweet links to news about climate change')
+			elif x==-1:
+				st.success('Tweet does not support man-made climate change')
+			else:
+				st.success('Tweet neither supports nor refutes the belief of man-made climate change') 
 
             
 # Required to let Streamlit instantiate our web app.  
