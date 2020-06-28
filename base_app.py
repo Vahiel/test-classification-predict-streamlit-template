@@ -29,8 +29,6 @@ import joblib,os
 import pandas as pd
 import numpy as np
 import spacy
-nlp = spacy.load('en_core_web_sm')
-import pickle
 import re 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
@@ -44,6 +42,22 @@ tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl f
 
 # Load your raw data
 raw = pd.read_csv("resources/train.csv")
+
+def clean_text(raw): 
+    # Remove link
+	raw = re.sub(r'http\S+', '', raw)
+    # Remove "RT"
+	raw = re.sub('RT ', '', raw)
+    # Remove unexpected artifacts
+	raw = re.sub(r'â€¦', '', raw)
+	raw = re.sub(r'…', '', raw)
+	raw = re.sub(r'â€™', "'", raw)
+	raw = re.sub(r'â€˜', "'", raw)
+	raw = re.sub(r'\$q\$', "'", raw)
+	raw = re.sub(r'&amp;', "and", raw)
+	words = raw.split()  
+
+	return( " ".join(words))
 
 # The main function where we will build the actual app
 def main():
@@ -77,40 +91,9 @@ def main():
 		tweet_text = st.text_area("Enter Text","Type Here")
 
 		if st.button("Classify"):
-			tweet_text = tweet_text.lower()
-            #Remove stop words
-			def stop_words(text):
-				word = text.split()
-                #Remove stop words
-				stop_word = set(stopwords.words("english"))
-				remove_stop = [w for w in word if w not in stop_word]
-				free_stop = " ".join(remove_stop)
-				return free_stop
-			tweet_text = stop_words(tweet_text)
-            
-			spec_chars = ["!",'"',"#","%","&","'","(",")",
-              "*","+",",","-",".","/",":",";","<",
-              "=",">","?","@","[","\\","]","^","_",
-              "`","{","|","}","~","–","0123456789"]
-			for char in spec_chars:
-				tweet_text = tweet_text.replace(char, ' ')
-			def clean_ing(raw): 
-			# Remove link
-				raw = re.sub(r'http\S+', '', raw)
-                # Remove "RT"
-				raw = re.sub('RT ', '', raw)
-                # Remove unexpected artifacts
-				raw = re.sub(r'â€¦', '', raw)
-				raw = re.sub(r'…', '', raw)
-				raw = re.sub(r'â€™', "'", raw)
-				raw = re.sub(r'â€˜', "'", raw)
-				raw = re.sub(r'\$q\$', "'", raw)
-				raw = re.sub(r'&amp;', "and", raw)
-				words = raw.split()  
 
-				return( " ".join(words))
-            
-			tweet_text = clean_ing(tweet_text)                
+			tweet_text = clean_text(tweet_text)
+
 			# Transforming user input with vectorizer
 			#vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
